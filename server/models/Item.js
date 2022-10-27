@@ -1,4 +1,6 @@
 var { Schema, model } = require('mongoose');
+// ??? not sure if we will actually need to format date but added it just in case 
+const dateFormat = require('../utils/dateFormat');
 
 const itemSchema = new Schema({
     itemText:{
@@ -8,9 +10,14 @@ const itemSchema = new Schema({
         maxlength: 280,
         trim: true,
     },
-    comments: [
+    createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
+    notes: [
         {
-            commentText: {
+            noteText: {
                 type: String,
                 required: true,
                 minlength: 1,
@@ -18,7 +25,6 @@ const itemSchema = new Schema({
             },
         },
     ],
-    // would a createdAt value be helpful or annoying???
 });
 
 const Item = model('Item', itemSchema);
