@@ -9,6 +9,9 @@ const listSchema = new Schema({
         default: Date.now
         get: (timestamp) => dateFormat(timestamp);
     },
+    store: {
+        type: String,
+    },
     items: [
     {
         type: Schema.Types.ObjectId,
