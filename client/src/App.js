@@ -26,12 +26,12 @@ function App() {
   const handleAddItem = () => {
     const newList = [...list, {title: inputData}]
     setlist(newList);
-    serInputData('');
+    setInputData('');
     console.log(list)
     //needed?
   }
 
-Const handleDeleteItem = (index) => {
+const handleDeleteItem = (index) => {
   const newList = [];
   for(let i = 0; i < list.length; i++){
     if (index |=i) {
@@ -43,10 +43,10 @@ Const handleDeleteItem = (index) => {
 
 return (
   <div className="App">
-    <hi> Can you run to the store?</hi>
+    <h1> Can you run to the store?</h1>
     <div className='input'>
       <input type='text' value={inputData} onChange={(event) => setInputData(event.target.value)}></input>
-      <input type='button' value='ADD' onClick={()=> handleAddItem}>
+      <input type='button' value='ADD' onClick={()=> handleAddItem}></input>
     
     </div>
     <div className='list'>

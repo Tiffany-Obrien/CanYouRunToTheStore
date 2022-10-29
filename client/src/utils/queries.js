@@ -16,6 +16,7 @@ export const QUERY_ME = gql`
             createdAt
             quantity
             notes {
+                _id
                 noteText
             }
         }
@@ -36,6 +37,7 @@ export const QUERY_LISTS = gql`
             createdAt
             quantity
             notes {
+                _id
                 noteText
             }
       }
@@ -55,7 +57,8 @@ export const QUERY_SINGLE_LIST = gql`
             createdAt
             quantity
             notes {
-            noteText
+              _id
+              noteText
         }
       }
     }
