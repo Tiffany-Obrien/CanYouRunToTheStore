@@ -1,18 +1,18 @@
 import { useReducer } from 'react';
 import {
-    ADD_ITEM_TO_LIST,
-    ADD_MULTIPLE_TO_LIST,
-    ADD_NOTE,
+    ADD_ITEM_TO_LIST, //
+    ADD_MULTIPLE_TO_LIST, //(unsure if necessary for mutations)
+    ADD_NOTE, // 
     UPDATE_LIST, // not sure if we need it but I'll keep it just in case 
-    UPDATE_ITEM,
-    UPDATE_ITEM_QUANTITY,
-    UPDATE_NOTE,
-    REMOVE_ITEM_FROM_LIST,
-    REMOVE_NOTE_FROM_ITEM,
-    REMOVE_LIST,
-    CLEAR_LIST,
+    UPDATE_ITEM, // 
+    UPDATE_ITEM_QUANTITY, // not sure if needed as a mutation
+    UPDATE_NOTE, // 
+    REMOVE_ITEM_FROM_LIST, //
+    REMOVE_NOTE_FROM_ITEM, // 
+    REMOVE_LIST, //
+    CLEAR_LIST, //
     TOGGLE_LIST,
-    TOGGLE_ITEM,
+    TOGGLE_ITEM, //
 } from './actions';
 
 // The reducer is a function that accepts the current state and an action. It returns a new state based on that action.
