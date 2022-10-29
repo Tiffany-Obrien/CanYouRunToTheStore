@@ -36,6 +36,7 @@ export const ADD_LIST = gql`
     addList(items: $items) {
         _id
         createdAt
+        name
         store
         items {
             _id
@@ -43,41 +44,200 @@ export const ADD_LIST = gql`
             createdAt
             quantity
             notes {
-            noteText
+              _id
+              noteText
         }
       }
     }
   }
 `;
 
-// on second thought I think this needs to be an action/reducer situation 
-// export const ADD_ITEM = gql`
-//   mutation addItem($items: [ID]!) {
-//     addItem(items: $items) {
-//       createdAt
-//       items {
-//         _id
-//         itemText
-//         createdAt
-//         quantity
-//         notes {
-//           noteText
-//         }
-//       }
-//     }
-//   }
-// `;
+export const ADD_ITEM_TO_LIST = gql`
+  mutation addItemToList($listId: ID!, $itemText: String!) {
+    addItemToList(listId: $listId, itemText: $itemText) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`; 
 
 export const ADD_NOTE = gql`
-  mutation addNote($listId: ID!, $noteText: String!) {
-    addNote(listId: $listtId, noteText: $noteText) {
-      _id
-      itemText
-      createdAt
-      notes {
+  mutation addNote($listId: ID!, $itemId: ID!, $noteText: String!) {
+    addNote(listId: $listtId, itemId: $itemId, noteText: $noteText) {
         _id
-        noteText
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
       }
     }
   }
 `;
+
+export const UPDATE_ITEM = gql`
+  mutation updateItem($listId: ID!, $itemId: ID! $itemText: String!) {
+    updateItem(listId: $listId, itemId: $itemId, itemText: $itemText) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`; 
+
+export const UPDATE_NOTE = gql`
+  mutation updateNote($listId: ID!, $itemId: ID!, $noteText: String!) {
+    updateNote(listId: $listtId, itemId: $itemId, noteText: $noteText) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`;
+
+export const REMOVE_ITEM_FROM_LIST = gql`
+  mutation removeItemFromList($listId: ID!, $itemId: ID!) {
+    removeItemFromList(listId: $listId, itemId: $itemId) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`; 
+
+export const REMOVE_NOTE_FROM_ITEM = gql`
+  mutation removeNoteFromItem($listId: ID!, $itemId: ID!, $noteId: ID!) {
+    removeNoteFromItem(listId: $listtId, itemId: $itemId, $noteId: ID!) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`;
+
+export const REMOVE_LIST = gql`
+  mutation removeList($listId: ID!) {
+    removeList(listId: $listId) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`;
+
+// need to figure out how to clear items & notes but not the shell of the list itself 
+export const CLEAR_LIST = gql`
+  mutation clearList($listId: ID!) {
+    clearList(listId: $listId) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`;
+
+export const TOGGLE_ITEM = gql`
+  mutation toggleItem($listId: ID!, $itemId: ID!) {
+    toggleItem(listId: $listId, itemId: $itemId) {
+        _id
+        createdAt
+        name
+        store
+        items {
+            _id
+            itemText
+            createdAt
+            quantity
+            notes {
+              _id
+              noteText
+        }
+      }
+    }
+  }
+`; 
