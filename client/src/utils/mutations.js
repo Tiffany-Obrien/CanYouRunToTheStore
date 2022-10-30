@@ -36,10 +36,12 @@ export const ADD_LIST = gql`
     addList(items: $items) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
             _id
+            itemAuthor
             itemText
             createdAt
             quantity
@@ -57,6 +59,7 @@ export const ADD_ITEM_TO_LIST = gql`
     addItemToList(listId: $listId, itemText: $itemText) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -78,6 +81,7 @@ export const ADD_NOTE = gql`
     addNote(listId: $listtId, itemId: $itemId, noteText: $noteText) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -99,6 +103,7 @@ export const UPDATE_ITEM = gql`
     updateItem(listId: $listId, itemId: $itemId, itemText: $itemText) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -120,6 +125,7 @@ export const UPDATE_NOTE = gql`
     updateNote(listId: $listtId, itemId: $itemId, noteText: $noteText) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -141,6 +147,7 @@ export const REMOVE_ITEM_FROM_LIST = gql`
     removeItemFromList(listId: $listId, itemId: $itemId) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -162,6 +169,7 @@ export const REMOVE_NOTE_FROM_ITEM = gql`
     removeNoteFromItem(listId: $listtId, itemId: $itemId, $noteId: ID!) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -183,6 +191,7 @@ export const REMOVE_LIST = gql`
     removeList(listId: $listId) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -205,6 +214,7 @@ export const CLEAR_LIST = gql`
     clearList(listId: $listId) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {
@@ -226,6 +236,7 @@ export const TOGGLE_ITEM = gql`
     toggleItem(listId: $listId, itemId: $itemId) {
         _id
         createdAt
+        listAuthor
         name
         store
         items {

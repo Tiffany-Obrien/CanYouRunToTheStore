@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { ADD_NOTE } from '../../utils/mutations';
 import { QUERY_SINGLE_LIST } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
+
+// styled components button
+const Button = styled.button`
+  color: #F6AE2D;
+  background: #33658A;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em .5em;
+  border: 3px solid #86BBD8;
+  border-radius: 7px;
+`;
+
 
 const NoteForm = () => {
   const [noteText, setNoteText] = useState('');
@@ -54,8 +67,6 @@ const NoteForm = () => {
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
-
       {Auth.loggedIn() ? (
         <>
           <p
@@ -81,9 +92,9 @@ const NoteForm = () => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+              <Button type="submit">
                 Add Note
-              </button>
+              </Button>
             </div>
             {error && (
               <div className="col-12 my-3 bg-danger text-white p-3">
