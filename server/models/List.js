@@ -9,6 +9,11 @@ const listSchema = new Schema({
         default: Date.now
         get: (timestamp) => dateFormat(timestamp);
     },
+    listAuthor: {
+        type: String,
+        required: true,
+        trim: true,
+    }
     name: {
         type: String,
     },
