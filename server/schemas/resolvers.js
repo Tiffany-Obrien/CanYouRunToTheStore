@@ -87,15 +87,12 @@ const resolvers = {
         }
     },
     Mutation: {
-        addUser: async (parent, args) => {
-            // create user with data from arguments
-            const user = await User.create(args)
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
 
-            //sign token with user data
-            const token = signToken(user);
-
-            return { token, user };
-        },
+      return { token, user };
+    },
         login: async (parent, { email, password }) => {
             //gets user by email
             const user = await User.findOne({ email });
@@ -137,8 +134,112 @@ const resolvers = {
         updateItem: async (parent, { _id, price }) => {
             //updates shirt price and returns it
             return await Item.findByIdAndUpdate(_id, { price: price }, { new: true })
-        }
-    }
-}
+        },
+        addList: async (parent, { listName, listAuthor }, context) => {
+            if (context.user) {
+                const list = await List.create({ listName, listAuthor});
+
+                await User.findOneAndUpdate(
+                    { username: listAuthor },
+                    { $push: { lists: list._id } }
+                );
+                return list;
+                }
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+            },
+        addItemToList: async (parent, { listId, itemText, listAuthor }, context) => {
+            if (context.user) {
+            return List.findOneAndUpdate(
+                { _id: listId },
+                { $push: { items: { itemText, listAuthor } },
+                },
+                {
+                    new: true, 
+                    runValidators: true,
+                }
+            );
+            }
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+            },
+        addNote: async (parent, {itemId, noteText, listAuthor }, context) => {
+            if (context.user) {
+                return Item.findOneAndUpdate(
+                    { _id: itemId },
+                    { $push: { note: {noteText, listAuthor } },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+                );
+            }
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+        },
+        updateItem: async (parent, { listId, itemText, listAuthor }, context) => {
+            if (context.user) {
+            return List.findOneAndUpdate(
+                { _id: listId },
+                { $push: { items: { itemText, listAuthor } },
+                },
+                {
+                    new: true, 
+                    runValidators: true,
+                }
+            );
+            }
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+            },
+        updateNote: async (parent, {itemId, noteText, listAuthor }, context) => {
+            if (context.user) {
+                return Item.findOneAndUpdate(
+                    { _id: itemId },
+                    { $push: { note: {noteText, listAuthor } },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+                );
+            }
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+        },
+        removeItemFromList: async ( parent, {listId, itemId }, context) => {
+            if (context.user) {
+                return List.findOneAndUpdate(
+                    { _id: listId }, 
+                    { $pull: {items: { _id: itemId } } },
+                    {new: true }
+                );
+            };
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')            
+        },
+        removeNoteFromItem: async ( parent, { itemId, noteId }) => {
+            if (context.user) {
+                return Item.findOneAndUpdate(
+                    { _id: itemId },
+                    { $pull: { notes: { _id: noteId } } },
+                    { new: true },
+                );
+            };
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+        },
+        removeList: async ( parent, { listId }) => {
+            if (context.user) {
+                return List.findOneAndDelete({ _id: listId});
+            };
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')
+        },
+        clearList: async ( parent, { listId, itemId }, context) => {
+            if (context.user) {
+                return Item.updateMany(
+                    { _id: listId },
+                    { $pullAll: { items: { _id: itemId } } },
+                    { new: true }
+                );
+            };
+                throw new AuthenticationError('Please log in to create a list before you run to the store!')            
+        },
+    },
+};
 
 module.exports = resolvers;

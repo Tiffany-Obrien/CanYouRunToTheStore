@@ -10,7 +10,7 @@ export const QUERY_ME = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -33,7 +33,7 @@ export const QUERY_LISTS = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -55,7 +55,7 @@ export const QUERY_SINGLE_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id

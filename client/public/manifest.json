@@ -3,12 +3,12 @@
  "name": "Can You Run to the Store?",
  "icons": [
    {
-       "src": "./src/assets/images/bread-icon-4.png",
+       "src": "src/assets/images/bread-icon-4.png",
        "sizes": "192x192",
        "type": "image/png"
    },
    {
-       "src": "./src/assets/images/bread-icon-4.png",
+       "src": "src/assets/images/bread-icon-4.png",
        "sizes": "512x512",
        "type": "image/png"
    }
