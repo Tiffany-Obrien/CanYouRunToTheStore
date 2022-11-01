@@ -7,14 +7,13 @@ const listSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
-        get: (timestamp) => dateFormat(timestamp);
     },
     listAuthor: {
         type: String,
         required: true,
         trim: true,
-    }
-    name: {
+    },
+    listName: {
         type: String,
     },
     store: {

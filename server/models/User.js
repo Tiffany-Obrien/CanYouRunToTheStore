@@ -22,7 +22,12 @@ const userSchema = new Schema({
         required: true,
         minlength: 5,
     },
-    lists: [List.Schema]
+    lists: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'List',
+        },
+    ],
 });
 
 userSchema.pre('save', async function (next) {

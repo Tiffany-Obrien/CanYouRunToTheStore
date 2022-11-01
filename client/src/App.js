@@ -7,21 +7,21 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ItemProvider } from './utils/GlobalState';
+// import { ItemProvider } from './utils/GlobalState';
 
 import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import MyLists from './pages/MyLists';
+// import MyLists from './pages/MyLists';
 import SingleList from './pages/SingleList';
-import Profile from './pages/Profile';
+// import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+// import Header from './components/Header';
+// import Footer from './components/Footer';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri: '/graphql',
+
 });
 
 
@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
+  uri: '/graphql',
   cache: new InMemoryCache(),
 });
 
@@ -49,8 +49,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          <ItemProvider>
-            <Header />
+          {/* <ItemProvider> */}
             <Navbar />
               <div className="container">
                 <Routes>
@@ -67,21 +66,13 @@ function App() {
                     element={<Signup />}
                   />
                   <Route 
-                    path="/me"
-                    element={<Profile />}
-                  />
-                  <Route 
-                    path="/lists"
-                    element={<MyLists />}
-                  />
-                  <Route 
                     path="/lists/:listId"
                     element={<SingleList />}
                   />
                 </Routes>
               </div>
-            <Footer />
-          </ItemProvider>
+            {/* <Footer /> */}
+          {/* </ItemProvider> */}
         </div>
       </Router>
     </ApolloProvider>

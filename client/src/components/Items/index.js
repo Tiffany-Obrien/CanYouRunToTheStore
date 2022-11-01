@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
+import Auth from '../../utils/auth';
 
 import { UPDATE_ITEM, UPDATE_NOTE, REMOVE_ITEM_FROM_LIST, REMOVE_NOTE_FROM_ITEM, } from '../../utils/mutations';
 import { QUERY_SINGLE_LIST } from '../../utils/queries';
@@ -28,7 +30,7 @@ const Items = ({ items, notes }) => {
       try {
         cache.writeQuery({
           query: QUERY_SINGLE_LIST,
-          data: { singleList: update },
+          data: { singleList: updateItem },
         });
       } catch (e) {
         console.error(e);
@@ -46,12 +48,12 @@ const Items = ({ items, notes }) => {
     }
   };
 
-  const [updateNote, { error }] = useMutation(UPDATE_NOTE, {
+  const [updateNote, { newError }] = useMutation(UPDATE_NOTE, {
     update(cache, { data: { updateNote } }) {
       try {
         cache.writeQuery({
           query: QUERY_SINGLE_LIST,
-          data: { singleList: update },
+          data: { singleList: updateNote },
         });
       } catch (e) {
         console.err(e);
@@ -69,12 +71,12 @@ const Items = ({ items, notes }) => {
     }
   };
     
-  const [removeItemFromList, { error }] = useMutation(REMOVE_ITEM_FROM_LIST, {
+  const [removeItemFromList, { newerError }] = useMutation(REMOVE_ITEM_FROM_LIST, {
     update(cache, { data: { removeItemFromList } }) {
       try {
         cache.writeQuery({
           query: QUERY_SINGLE_LIST,
-          data: { singleList: update },
+          data: { singleList: removeItemFromList },
         });
       } catch (e) {
         console.err(e);
@@ -92,12 +94,12 @@ const Items = ({ items, notes }) => {
     }
   };
 
-  const [removeNoteFromItem, { error }] = useMutation(REMOVE_NOTE_FROM_ITEM, {
+  const [removeNoteFromItem, { otherError }] = useMutation(REMOVE_NOTE_FROM_ITEM, {
     update(cache, { data: { removeNoteFromItem } }) {
       try {
         cache.writeQuery({
           query: QUERY_SINGLE_LIST,
-          data: { singleList: update },
+          data: { singleList: removeNoteFromItem },
         });
       } catch (e) {
         console.err(e);
@@ -138,8 +140,6 @@ const Items = ({ items, notes }) => {
                   >Delete</DeleteButton>
             </div>
             ))}
-        </div>
-        <div>
         {notes &&
             notes.map((note) => (
             <div key={note._id} className="card mb-3">
@@ -150,7 +150,7 @@ const Items = ({ items, notes }) => {
                 onClick={() => handleUpdateNote(note)}
                 >Edit</Button>
                 <DeleteButton 
-                onClick={() => handleRemoveNoteFromItem(item)}
+                onClick={() => handleRemoveNoteFromItem(note)}
                 >Delete</DeleteButton>
             </div>
             ))}

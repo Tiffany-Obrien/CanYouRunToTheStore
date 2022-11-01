@@ -37,7 +37,7 @@ export const ADD_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -60,7 +60,7 @@ export const ADD_ITEM_TO_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -82,7 +82,7 @@ export const ADD_NOTE = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -104,7 +104,7 @@ export const UPDATE_ITEM = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -126,7 +126,7 @@ export const UPDATE_NOTE = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -148,7 +148,7 @@ export const REMOVE_ITEM_FROM_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -165,12 +165,12 @@ export const REMOVE_ITEM_FROM_LIST = gql`
 `; 
 
 export const REMOVE_NOTE_FROM_ITEM = gql`
-  mutation removeNoteFromItem($listId: ID!, $itemId: ID!, $noteId: ID!) {
-    removeNoteFromItem(listId: $listtId, itemId: $itemId, $noteId: ID!) {
+  mutation removeNoteFromItem($itemId: ID!, $noteId: ID!) {
+    removeNoteFromItem(itemId: $itemId, noteId: $noteId) {
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -192,7 +192,7 @@ export const REMOVE_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -215,7 +215,7 @@ export const CLEAR_LIST = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
@@ -237,7 +237,7 @@ export const TOGGLE_ITEM = gql`
         _id
         createdAt
         listAuthor
-        name
+        listName
         store
         items {
             _id
