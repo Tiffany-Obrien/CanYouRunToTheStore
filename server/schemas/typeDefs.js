@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express')
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
     type List {
@@ -48,12 +48,8 @@ const typeDefs = gql`
         me(username: String): [List]
         lists(username: String): [List]
         singleList (listId: ID!): List 
-        items(list: ID): [Item]
-        item(_id: ID!): Item
-        user: User
-        pick(_id: ID!): Pick
-        complete(items: [ID]!): Complete
     }
+
     type Mutation { 
         addUser(username: String, email: String!, password: String!): Auth
         login(username: String!, password: String!): Auth
@@ -103,7 +99,7 @@ const typeDefs = gql`
             itemText: String!
             listAuthor: String!
         ): Item
-
     }
-`
+`;
+
 module.exports = typeDefs;
