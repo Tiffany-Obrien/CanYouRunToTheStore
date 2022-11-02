@@ -35,16 +35,6 @@ export const QUERY_LISTS = gql`
         listAuthor
         listName
         store
-        items {
-            _id
-            itemText
-            createdAt
-            quantity
-            notes {
-                _id
-                noteText
-            }
-      }
     }
   }
 `;

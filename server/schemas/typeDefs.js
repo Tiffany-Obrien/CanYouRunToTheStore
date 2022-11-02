@@ -40,9 +40,10 @@ const typeDefs = gql`
     }   
     
     type Auth {
-        token: ID
+        token: ID!
         user: User
     }
+    
     type Query {
         me(username: String): [List]
         lists(username: String): [List]

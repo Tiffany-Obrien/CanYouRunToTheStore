@@ -5,9 +5,10 @@ const { Schema, model } = mongoose;
 
 const listSchema = new Schema({
     createdAt: {
-        type: Date,
-        default: Date.now
-    },
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
     listAuthor: {
         type: String,
         required: true,
@@ -15,6 +16,8 @@ const listSchema = new Schema({
     },
     listName: {
         type: String,
+        required: true,
+        trim: true,
     },
     store: {
         type: String,

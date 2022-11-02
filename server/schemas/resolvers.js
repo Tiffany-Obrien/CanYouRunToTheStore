@@ -1,12 +1,13 @@
-const { AuthenticationError } = require('apollo-server-express')
-const { User, Item, List} = require('../models')
-const { signToken } = require('../utils/auth')
+const { AuthenticationError } = require('apollo-server-express');
+const { User, Item, List} = require('../models');
+const { signToken } = require('../utils/auth');
 //const stripe = require('stripe')('sk_test_51KnWTLJspjbSsWAyeelYzgt21wbCIe7TLNZXztNJajiYsFcJUZ7yBA75WzYJfEVMK5QqgvkgAdAG3NoiEDcDGBFB00s2PZ3R5M')
 
 const resolvers = {
     Query: {
-        lists: async () => {
-            return await List.find()
+        lists: async (parent, { username }) => {
+        const params = username ? { username } : {};
+        return List.find(params).sort({ createdAt: -1 });
         },
         items: async (parent, { list }) => {
             const params = {}
