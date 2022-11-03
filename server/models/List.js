@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
 
 const { Schema, model } = mongoose;
 
@@ -7,7 +6,6 @@ const listSchema = new Schema({
     createdAt: {
     type: Date,
     default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
   },
     listAuthor: {
         type: String,

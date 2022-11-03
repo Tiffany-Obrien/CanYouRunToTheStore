@@ -1,32 +1,6 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-    type List {
-        _id: ID
-        listAuthor: String
-        listName: String
-        store: String
-        lists: [List]!
-    }
-    
-    type Item {
-        _id: ID
-        itemText: String
-        createdAt: String
-        notes: [Note]!
-    }
-
-    type Note {
-        _id: ID
-        noteText: String
-    }
-
-    type Pick { 
-        _id: ID
-        purchaseDate: String
-        items: [Item]
-    }
-
     type User {
         _id: ID
         username: String
@@ -35,25 +9,44 @@ const typeDefs = gql`
         lists: [List]!
     }
 
-    type Complete {
-        session: ID
-    }   
+    type List {
+        _id: ID
+        listAuthor: String
+        listName: String
+        createdAt: String
+        store: String
+        items: [Item]!
+    }
+    
+    type Item {
+        _id: ID
+        itemText: String
+        itemAuthor: String
+        createdAt: String
+        notes: Note!
+    }
+
+    type Note {
+        _id: ID
+        noteText: String
+        noteAuthor: String
+    }  
     
     type Auth {
-        token: ID!
+        token: ID
         user: User
     }
     
     type Query {
-        me(username: String): [List]
-        lists(username: String): [List]
-        singleList (listId: ID!): List 
+        me: User
+        lists: [List]
+        list(listId: ID!): List
+        items(listId: ID!): [Item]
     }
 
     type Mutation { 
-        addUser(username: String, email: String!, password: String!): Auth
-        login(username: String!, password: String!): Auth
-        addPick(items: [ID]!): Pick
+        addUser(username: String!, email: String!, password: String!): Auth
+        login(email: String!, password: String!): Auth
         addList(listName: String!, listAuthor: String!): List
         addItemToList(
             listId: ID!

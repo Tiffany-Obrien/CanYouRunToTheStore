@@ -1,6 +1,4 @@
 var { Schema, model } = require('mongoose');
-// ??? not sure if we will actually need to format date but added it just in case 
-const dateFormat = require('../utils/dateFormat');
 
 const itemSchema = new Schema({
     itemText:{
@@ -13,7 +11,6 @@ const itemSchema = new Schema({
     createdAt: {
     type: Date,
     default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
   },
     notes: [
         {
