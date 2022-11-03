@@ -16,6 +16,15 @@ export const QUERY_ME = gql`
     }
   }
 `;
+export const QUERY_USER = gql`
+  query user($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+    }
+  }
+`;
 
 export const QUERY_LISTS = gql`
   query getLists {
@@ -29,7 +38,6 @@ export const QUERY_LISTS = gql`
             _id
             itemText
             createdAt
-            quantity
             notes {
               _id
               noteText
@@ -40,7 +48,7 @@ export const QUERY_LISTS = gql`
   `;
 
 export const QUERY_SINGLE_LIST = gql`
-  query getSingleList($listId: ID) {
+  query getSingleList($listId: ID!) {
     list(listId: $listId) {
         _id
         createdAt
@@ -59,20 +67,3 @@ export const QUERY_SINGLE_LIST = gql`
     }
   }
 `;
-
-export const QUERY_ITEMS = gql`
-  query getItems($listtId: ID!) {
-    items(listId: $listId) {
-        items {
-            _id
-            itemText
-            createdAt
-            quantity
-            notes {
-              _id
-              noteText
-        }
-      }
-    }
-  }
-  `;
