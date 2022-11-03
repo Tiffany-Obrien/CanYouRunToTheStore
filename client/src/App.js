@@ -1,13 +1,12 @@
-import React , { useState } from 'react';
+import React from 'react';
 import {
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
+  ApolloClient,
 } from '@apollo/client';
-import { ApolloClient } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { ItemProvider } from './utils/GlobalState';
 
 import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
