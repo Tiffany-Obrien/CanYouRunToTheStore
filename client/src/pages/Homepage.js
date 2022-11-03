@@ -3,11 +3,8 @@ import { Link } from 'react-router-dom';
 
 
 const Home = () => {
-
-
   return (
     <main>
-        
       <div className="flex-row justify-center">
         <div>
           <Link
