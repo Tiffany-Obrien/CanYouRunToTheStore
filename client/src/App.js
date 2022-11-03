@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 import {
   InMemoryCache,
   ApolloProvider,
@@ -38,6 +38,49 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+
+function App() {
+  const [list, setlist] = useState([]);
+  const [inputData, setInputData] = useState('');
+  const handleAddItem = () => {
+    const newList = [...list, {title: inputData}]
+    setlist(newList);
+    serInputData('');
+    console.log(list)
+    //needed?
+  }
+
+Const handleDeleteItem = (index) => {
+  const newList = [];
+  for(let i = 0; i < list.length; i++){
+    if (index |=i) {
+      newList.push(list[i]);
+    }
+  }
+  setlist(newList);
+}
+
+return (
+  <div className="App">
+    <hi> Can you run to the store?</hi>
+    <div className='input'>
+      <input type='text' value={inputData} onChange={(event) => setInputData(event.target.value)}></input>
+      <input type='button' value='ADD' onClick={()=> handleAddItem}>
+    
+    </div>
+    <div className='list'>
+      {list.map((item, index) => {
+        return(
+          <div>
+           <p onClick={() => handleDeleteItem(index)}>{item.title}</p>
+            </div>
+        )
+      })}
+
+    </div>
+  </div>
+
+  
 
 function App() {
   return (
