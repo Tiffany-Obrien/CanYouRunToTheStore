@@ -1,25 +1,27 @@
-import { useState } from "react";  
+import React, { useState } from 'react';
+
+const ListForm = () =>  {
   
-const [list, setlist] = useState([]);
+  const [list, setlist] = useState('');
 
-const [inputData, setInputData] = useState('');
+  const [inputData, setInputData] = useState('');
 
-const handleAddItem = () => {
+  const handleAddItem = () => {
 
-    const newList = [...list, {title: inputData}]
+      const newList = [...list, {title: inputData}]
 
-    setlist(newList);
+      setlist(newList);
 
-    setInputData('');
+      setInputData('');
 
-    console.log(list)
-//needed?
-}
+      console.log(list)
+  //needed?
+  }
 
 const handleDeleteItem = (index) => {
   const newList = [];
   for(let i = 0; i < list.length; i++){
-    if (index || =i) {
+    if (index >= i) {
       newList.push(list[i]);
     }
   }
@@ -46,5 +48,6 @@ return (
     </div>
 </div>
 );
+}
 
 export default ListForm;

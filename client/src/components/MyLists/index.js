@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Auth from '../../../../server/utils/auth';
+import Auth from '../../utils/auth';
 
-const Lists = ({ 
+const myLists = ({ 
   lists, 
   title,
   showTitle = true,
@@ -22,7 +22,7 @@ const Lists = ({
         lists.map((list) => (
           <div key={list._id} className="card mb-3">
             <div className="card-body bg-light p-2">
-              <p>{lists.name}</p>
+              <p>{lists.listName}</p>
             </div>
             <Link
               className="btn btn-primary btn-block btn-squared"
@@ -43,4 +43,4 @@ const Lists = ({
   );
 };
 
-export default Lists;
+export default myLists;
