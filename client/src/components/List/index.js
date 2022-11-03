@@ -1,13 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Lists = ({ lists, title }) => {
+import Auth from '../../../../server/utils/auth';
+
+const Lists = ({ 
+  lists, 
+  title,
+  showTitle = true,
+  showUsername = false, 
+}) => {
   if (!lists.length) {
     return <h3>✏️ Don't run to the store just yet! You have to make a list first! ✏️</h3>;
   }
 
   return (
     <div>
+      {Auth.loggedIn() ? (
+        <>
       <h3>{title}</h3>
       {lists &&
         lists.map((list) => (
@@ -23,6 +32,13 @@ const Lists = ({ lists, title }) => {
             </Link>
           </div>
         ))}
+        </>
+        ) : (
+                <h3>
+                Login to see your lists! Please{' '}
+                <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+            </h3>
+        )}
     </div>
   );
 };
