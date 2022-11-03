@@ -39,7 +39,8 @@ const typeDefs = gql`
     
     type Query {
         me: User
-        lists: [List]
+        user(username: String!): User
+        lists(userId: ID!): [List]
         list(listId: ID!): List
         items(listId: ID!): [Item]
     }
@@ -47,50 +48,40 @@ const typeDefs = gql`
     type Mutation { 
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        addList(listName: String!, listAuthor: String!): List
+        addList(listName: String!): User
         addItemToList(
             listId: ID!
             itemText: String!
-            listAuthor: String!
-        ): Item
+        ): List
         addNote(
             itemId: ID!
             noteText: String!
-            listAuthor: String!
         ): Item
         updateItem(
-            listId: ID!
-            itemText: String!
-            listAuthor: String!
-        ): Item
-        updateNote(
             itemId: ID!
+            itemText: String!     
+        ): List
+        updateNote(
+            noteId: ID!
             noteText: String!
-            listAuthor: String!
         ): Item
         removeItemFromList(
             listId: ID!
-            itemText: String!
-            listAuthor: String!
-        ): Item
+            itemId: ID!
+        ): List
         removeNoteFromItem(
             itemId: ID!
-            noteText: String!
-            listAuthor: String!
+            noteId: ID!
         ): Item
         removeList(
-            name: String!,
-            listAuthor: String!
+            listId: ID!
         ): List
         clearList(
-            itemId: [ID]!
-            itemText: String!
-            listAuthor: String
-        ): Item
-        toggleItem(
             listId: ID!
-            itemText: String!
-            listAuthor: String!
+            itemId: [ID]!
+        ): List
+        toggleItem(
+            itemId: ID!
         ): Item
     }
 `;

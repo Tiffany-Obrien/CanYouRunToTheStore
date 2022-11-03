@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
+import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ username: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN);
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -35,7 +35,7 @@ const Login = (props) => {
 
     // clear form values
     setFormState({
-      username: '',
+      email: '',
       password: '',
     });
   };
@@ -55,10 +55,10 @@ const Login = (props) => {
               <form onSubmit={handleFormSubmit}>
                 <input
                   className="form-input"
-                  placeholder="Your username"
-                  name="username"
-                  type="username"
-                  value={formState.username}
+                  placeholder="Your email"
+                  name="email"
+                  type="email"
+                  value={formState.email}
                   onChange={handleChange}
                 />
                 <input

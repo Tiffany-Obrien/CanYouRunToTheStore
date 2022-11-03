@@ -4,7 +4,6 @@ import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { ADD_NOTE } from '../../utils/mutations';
-import { QUERY_SINGLE_LIST } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
@@ -20,25 +19,12 @@ const Button = styled.button`
 `;
 
 
-const NoteForm = () => {
+const NoteForm = ({ itemId }) => {
   const [noteText, setNoteText] = useState('');
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addNote, { error }] = useMutation(ADD_NOTE, {
-    update(cache, { data: { addNote } }) {
-      try {
-        const { notes } = cache.readQuery({ query: QUERY_SINGLE_LIST });
-
-        cache.writeQuery({
-          query: QUERY_SINGLE_LIST,
-          data: { notes: [addNote, ...notes] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+  const [addNote, { error }] = useMutation(ADD_NOTE);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -46,6 +32,7 @@ const NoteForm = () => {
     try {
       const { data } = await addNote({
         variables: {
+          itemId,
           noteText,
         },
       });
