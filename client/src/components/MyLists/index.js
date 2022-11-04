@@ -22,7 +22,7 @@ const myLists = ({
               className="btn btn-primary btn-block btn-squared"
               to={`/lists/${list._id}`}
             >
-              It's dangerous to go alone! Take this. 📝
+              <p>{list.listName}</p> 📝
             </Link>
           </div>
         ))}

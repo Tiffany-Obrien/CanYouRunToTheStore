@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const QUERY_ME = gql`
     query Me {
         me {
+        _id
         username
         email
         password
@@ -22,8 +23,8 @@ export const QUERY_ME = gql`
             noteText
             noteAuthor
           }
-      }
         }
+      }
     }
 `;
 
@@ -45,12 +46,22 @@ export const QUERY_USER = gql`
 
 export const QUERY_LISTS = gql`
   query getLists {
-      lists {
-        _id
-        createdAt
-        listAuthor
-        listName
-        store
+        lists {
+          _id
+          listAuthor
+          listName
+          createdAt
+          items {
+              _id
+              itemText
+              itemAuthor
+              createdAt
+          }
+          notes {
+            _id
+            noteText
+            noteAuthor
+          }
     }
   }
   `;

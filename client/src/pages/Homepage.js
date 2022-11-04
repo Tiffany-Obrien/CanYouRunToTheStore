@@ -1,13 +1,12 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
 import { QUERY_LISTS } from '../utils/queries';
 // import Auth from '../utils/auth';
 
 import ListForm from '../components/ListForm/index2';
 import MyLists from '../components/MyLists/index';
 
-const Home = () => {
+const Home = ({user}) => {
   const { loading, data } = useQuery(QUERY_LISTS);
   const lists = data?.lists || [];
 
@@ -24,7 +23,9 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <MyLists/>
+            <MyLists
+            lists={lists}
+            />
           )}
         </div>
       </div>

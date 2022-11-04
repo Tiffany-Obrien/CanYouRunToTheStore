@@ -41,8 +41,8 @@ const typeDefs = gql`
     type Query {
         me: User
         user(username: String!): User
-        lists(username: String):[List]
-        list(listId: ID!): User
+        lists(username: String): [List]
+        list(listId: ID!): List
     }
 
     type Mutation { 
@@ -50,8 +50,8 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addList(listName: String!): List
         addItemToList(
-            listId: ID!
-            itemText: String!
+            listId: ID
+            itemText: String
         ): List
         addNote(
             itemId: ID!

@@ -28,6 +28,10 @@ export const ADD_USER = gql`
 export const ADD_LIST = gql`
   mutation addList($listName: String!) {
     addList(listName: $listName) {
+      _id
+      username
+      email
+      lists {
         _id
         createdAt
         listAuthor
@@ -35,10 +39,11 @@ export const ADD_LIST = gql`
         store
     }
   }
+  }
 `;
 
 export const ADD_ITEM_TO_LIST = gql`
-  mutation addItemToList($listId: ID!, $itemText: String!) {
+  mutation addItemToList($listId: ID, $itemText: String) {
     addItemToList(listId: $listId, itemText: $itemText) {
         _id
         createdAt
@@ -49,6 +54,7 @@ export const ADD_ITEM_TO_LIST = gql`
             _id
             itemText
             createdAt
+            itemAuthor
             notes {
               _id
               noteText

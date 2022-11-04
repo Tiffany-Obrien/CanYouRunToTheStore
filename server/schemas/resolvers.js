@@ -27,20 +27,9 @@ const resolvers = {
         },
 
         user: async (parent, { username }) => {
-            const user = User.findOne({ username }).populate({
-                path: 'lists',
-                model: 'List',
-                populate: {
-                    path: 'items',
-                    model: 'Item',
-                },
-                populate: {
-                    path: 'items',
-                    model: 'Item',
-                },
-            });
-            return user;
+        return User.findOne({ username }).populate('thoughts');
         },
+
     },
 
     Mutation: {
