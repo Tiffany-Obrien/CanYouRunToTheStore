@@ -23,9 +23,10 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      lists {
         _id
-        thoughtText
+        listText
+        listName
         createdAt
       }
     }
@@ -33,21 +34,17 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_LISTS = gql`
-  query getLists($userId: ID!) {
-    lists(userId: $userId) {
+  query getLists {
+    lists {
+      _id
+      username
+      email
+      lists {
         _id
         createdAt
         listAuthor
         listName
         store
-        items {
-            _id
-            itemText
-            createdAt
-            notes {
-              _id
-              noteText
-        }
       }
     }
   }

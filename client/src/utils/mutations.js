@@ -28,26 +28,12 @@ export const ADD_USER = gql`
 export const ADD_LIST = gql`
   mutation addList($listName: String!) {
     addList(listName: $listName) {
-      _id
-      username
-      lists {
         _id
         createdAt
         listAuthor
         listName
         store
-        items {
-            _id
-            itemAuthor
-            itemText
-            createdAt
-            notes {
-              _id
-              noteText
-        }
-      }
     }
-  }
   }
 `;
 
