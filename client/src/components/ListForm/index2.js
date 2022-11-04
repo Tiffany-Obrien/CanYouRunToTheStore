@@ -16,26 +16,24 @@ const ListForm = () => {
     update(cache, { data: { addList } }) {
       try {
         const { lists } = cache.readQuery({ 
-            query: QUERY_ME,
-            variables: {
-                ...addList
-            }
-            });
+            query: QUERY_LISTS,
+            variables: { ...addList },
+         });
 
         cache.writeQuery({
-          query: QUERY_ME,
-          data: { lists: [addList, lists] },
+          query: QUERY_LISTS,
+          data: { lists: [addList, ...lists] },
         });
       } catch (e) {
         console.error(e);
       }
 
-      // update me object's cache
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, lists: [...me.lists, addList] } },
-      });
+    //   // update me object's cache
+    //   const { me } = cache.readQuery({ query: QUERY_ME });
+    //   cache.writeQuery({
+    //     query: QUERY_ME,
+    //     data: { me: { ...me, lists: [...me.lists, addList] } },
+    //   });
     },
   });
 

@@ -1,4 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
+const { model } = require('mongoose');
 const { User, Item, List} = require('../models');
 const { signToken } = require('../utils/auth');
 //const stripe = require('stripe')('sk_test_51KnWTLJspjbSsWAyeelYzgt21wbCIe7TLNZXztNJajiYsFcJUZ7yBA75WzYJfEVMK5QqgvkgAdAG3NoiEDcDGBFB00s2PZ3R5M')
@@ -6,11 +7,9 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
 
-        lists: async (parent, args, context) => {
-            if(context.user) {
-            return User.findOne({ _id: context.userId }).populate('lists');
-            }
-            throw new AuthenticationError('You need to be logged in!');
+        lists: async (parent, { username }) => {
+        const params = username ? { username } : {};
+        return List.find(params).sort({ createdAt: -1 });
         },
 
         list: async (parent, { listId }, context) => {
@@ -21,14 +20,27 @@ const resolvers = {
         },
 
         me: async (parent, args, context) => {
-            if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('lists');
-            }
-            throw new AuthenticationError('You need to be logged in!');
-            }, 
+        if (context.user) {
+            return User.findOne({ _id: context.user._id }).populate('lists');
+        }
+        throw new AuthenticationError('You need to be logged in!');
+        },
+
         user: async (parent, { username }) => {
-            return User.findOne({ username }).populate('lists');
-    },
+            const user = User.findOne({ username }).populate({
+                path: 'lists',
+                model: 'List',
+                populate: {
+                    path: 'items',
+                    model: 'Item',
+                },
+                populate: {
+                    path: 'items',
+                    model: 'Item',
+                },
+            });
+            return user;
+        },
     },
 
     Mutation: {
@@ -66,7 +78,7 @@ const resolvers = {
             if (context.user) {
                 const list = await List.create({ 
                     listName,
-                    listAuthor: context.user.username,
+                    listAuthor: context.user._id,
                 });
 
                 await User.findOneAndUpdate(
