@@ -5,17 +5,21 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        
-        lists: async (parent, { username }) => {
-        const params = username ? { username } : {};
-        return List.find(params).sort({ createdAt: -1 });
+
+        lists: async (parent, args, context) => {
+            if(context.user) {
+            return User.findOne({ _id: context.userId }).populate('lists');
+            }
+            throw new AuthenticationError('You need to be logged in!');
         },
+
         list: async (parent, { listId }, context) => {
             if(context.user) {
             return List.findOne({ _id: listId });
             }
             throw new AuthenticationError('You need to be logged in!');
         },
+
         me: async (parent, args, context) => {
             if (context.user) {
                 return User.findOne({ _id: context.user._id }).populate('lists');
@@ -61,13 +65,13 @@ const resolvers = {
         addList: async (parent, { listName }, context) => {
             if (context.user) {
                 const list = await List.create({ 
-                    listName, 
+                    listName,
                     listAuthor: context.user.username,
                 });
 
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $addToSet: { lists: list._id } }
+                    { $addToSet: { [list]: list._id } }
                 );
                 return list;
                 }

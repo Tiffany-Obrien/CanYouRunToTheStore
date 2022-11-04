@@ -9,7 +9,7 @@ const myLists = ({
   showTitle = true,
   showUsername = false, 
 }) => {
-  if (!lists.length) {
+  if (!lists) {
     return <h3>✏️ Don't run to the store just yet! You have to make a list first! ✏️</h3>;
   }
 
