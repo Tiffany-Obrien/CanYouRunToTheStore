@@ -15,16 +15,12 @@ const ListForm = () => {
   const [addList, { error }] = useMutation(ADD_LIST, {
     update(cache, { data: { addList } }) {
       try {
-        const { lists } = cache.readQuery({ 
-            query: QUERY_ME,
-            variables: {
-                ...addList
-            }
-            });
+        const { ...lists } = cache.readQuery({ 
+            query: QUERY_LISTS });
 
         cache.writeQuery({
-          query: QUERY_ME,
-          data: { lists: [addList, lists] },
+          query: QUERY_LISTS,
+          data: { lists: [addList, ...lists] },
         });
       } catch (e) {
         console.error(e);
@@ -67,7 +63,7 @@ const ListForm = () => {
 
   return (
     <div>
-      <h3>What do you need to grab at the store?</h3>
+      <h3>What's this list going to be called?</h3>
 
       {Auth.loggedIn() ? (
         <>

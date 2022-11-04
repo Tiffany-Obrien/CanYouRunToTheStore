@@ -6,7 +6,7 @@ const typeDefs = gql`
         username: String
         email: String
         password: String
-        lists: [List]!
+        lists: [List]
     }
 
     type List {
@@ -15,7 +15,8 @@ const typeDefs = gql`
         listName: String
         createdAt: String
         store: String
-        items: [Item]!
+        items: [Item]
+        notes: [Note]
     }
     
     type Item {
@@ -23,7 +24,7 @@ const typeDefs = gql`
         itemText: String
         itemAuthor: String
         createdAt: String
-        notes: Note!
+        notes: [Note]
     }
 
     type Note {
@@ -40,7 +41,7 @@ const typeDefs = gql`
     type Query {
         me: User
         user(username: String!): User
-        lists: [List]
+        lists(username: String): [List]
         list(listId: ID!): List
     }
 
@@ -49,8 +50,8 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addList(listName: String!): List
         addItemToList(
-            listId: ID!
-            itemText: String!
+            listId: ID
+            itemText: String
         ): List
         addNote(
             itemId: ID!

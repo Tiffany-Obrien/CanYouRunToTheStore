@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Auth from '../../utils/auth';
+// import Auth from '../../utils/auth';
 
 const myLists = ({ 
   lists, 
@@ -9,14 +9,8 @@ const myLists = ({
   showTitle = true,
   showUsername = false, 
 }) => {
-  if (!lists) {
-    return <h3>✏️ Don't run to the store just yet! You have to make a list first! ✏️</h3>;
-  }
-
   return (
     <div>
-      {Auth.loggedIn() ? (
-        <>
       <h3>{title}</h3>
       {lists &&
         lists.map((list) => (
@@ -28,17 +22,10 @@ const myLists = ({
               className="btn btn-primary btn-block btn-squared"
               to={`/lists/${list._id}`}
             >
-              It's dangerous to go alone! Take this. 📝
+              <p>{list.listName}</p> 📝
             </Link>
           </div>
         ))}
-        </>
-        ) : (
-                <h3>
-                Login to see your lists! Please{' '}
-                <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
-            </h3>
-        )}
     </div>
   );
 };

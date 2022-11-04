@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
+import SingleList from './pages/SingleList'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -62,6 +63,11 @@ function App() {
                   path="/me"
                   element={<Profile />}
                 />
+                <Route
+                  path='/lists/:listId'
+                  element={<SingleList />}
+                >
+                </Route>
                 </Routes>
               </div>
         </div>
