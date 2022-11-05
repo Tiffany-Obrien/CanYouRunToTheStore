@@ -3,18 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
-  "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "export SETNODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
-    "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "start": "node server/server.js",
+    "build": "cd client && npm run build",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
-    "seed": "cd server && npm run seed",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "seed": "cd server && npm run seed"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "serve": "^14.0.1"
   }
 }
