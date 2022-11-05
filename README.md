@@ -30,14 +30,17 @@ Although we did not achieve full functionality on this project, with a small bre
 
 ## User Story
 
+```
 AS A member of a household who needs to frequently purchase items to maintain our home
 
 I WANT an application where I can track what items need to be purchased
 
 SO THAT I can ensure our household is never missing vital day-to-day items
+```
 
 ## Acceptance Criteria
 
+```
 GIVEN a virtual pantry
 
 WHEN I create an account using an email, password and unique username,
@@ -71,6 +74,7 @@ THEN I can update the note
 WHEN I am done shopping and need to log out of my account
 
 THEN I can click on the logout button and I am returned to the login/signup page
+```
 
 ## Visuals:
 
