@@ -8,17 +8,21 @@
     "npm": "8.x"
   },
   "scripts": {
-  "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "export SETNODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "start": "serve -s build",
+    "build": "react-scripts build",
     "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "test": "react-scripts test --env=jsdom",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "serve": "^14.0.1"
   }
 }
