@@ -1,24 +1,44 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_ME = gql`
-  query user($username: String!) {
+    query Me {
+        me {
+        _id
+        username
+        email
+        password
+        lists {
+          _id
+          listAuthor
+          listName
+          createdAt
+          items {
+              _id
+              itemText
+              itemAuthor
+              createdAt
+          }
+          notes {
+            _id
+            noteText
+            noteAuthor
+          }
+        }
+      }
+    }
+`;
+
+export const QUERY_USER = gql`
+  query user($username: String) {
     user(username: $username) {
       _id
       username
       email
       lists {
         _id
+        listText
+        listName
         createdAt
-        store
-        items {
-            _id
-            itemText
-            createdAt
-            quantity
-            notes {
-                noteText
-            }
-        }
       }
     }
   }
@@ -26,38 +46,43 @@ export const QUERY_ME = gql`
 
 export const QUERY_LISTS = gql`
   query getLists {
-    lists {
-        _id
-        createdAt
-        store
-        items {
+        lists {
+          _id
+          listAuthor
+          listName
+          createdAt
+          items {
+              _id
+              itemText
+              itemAuthor
+              createdAt
+          }
+          notes {
             _id
-            itemText
-            createdAt
-            quantity
-            notes {
-                noteText
-            }
-      }
+            noteText
+            noteAuthor
+          }
     }
   }
-`;
+  `;
 
 export const QUERY_SINGLE_LIST = gql`
-  query getSingleList($listtId: ID!) {
+  query getSingleList($listId: ID!) {
     list(listId: $listId) {
         _id
         createdAt
+        listAuthor
+        listName
         store
         items {
             _id
             itemText
             createdAt
-            quantity
+            }
             notes {
-            noteText
+              _id
+              noteText
         }
-      }
     }
   }
 `;

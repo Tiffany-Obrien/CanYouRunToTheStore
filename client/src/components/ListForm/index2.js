@@ -1,43 +1,52 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import styled from 'styled-components';
 
-import { ADD_NOTE } from '../../utils/mutations';
+import { ADD_LIST } from '../../utils/mutations';
+import { QUERY_LISTS, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
-// styled components button
-const Button = styled.button`
-  color: #F6AE2D;
-  background: #33658A;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em .5em;
-  border: 3px solid #86BBD8;
-  border-radius: 7px;
-`;
-
-
-const NoteForm = ({ itemId }) => {
-  const [noteText, setNoteText] = useState('');
+const ListForm = () => {
+  const [listName, setListName] = useState('');
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addNote, { error }] = useMutation(ADD_NOTE);
+  const [addList, { error }] = useMutation(ADD_LIST, {
+    update(cache, { data: { addList } }) {
+      try {
+        const { ...lists } = cache.readQuery({ 
+            query: QUERY_LISTS });
+
+        cache.writeQuery({
+          query: QUERY_LISTS,
+          data: { lists: [addList, ...lists] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      // update me object's cache
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, lists: [...me.lists, addList] } },
+      });
+    },
+  });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { data } = await addNote({
+      const { data } = await addList({
         variables: {
-          itemId,
-          noteText,
+          listName,
+          listAuthor: Auth.getProfile().data.username,
         },
       });
 
-      setNoteText('');
+      setListName('');
     } catch (err) {
       console.error(err);
     }
@@ -46,14 +55,16 @@ const NoteForm = ({ itemId }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'noteText' && value.length <= 280) {
-      setNoteText(value);
+    if (name === 'listName' && value.length <= 280) {
+      setListName(value);
       setCharacterCount(value.length);
     }
   };
 
   return (
     <div>
+      <h3>What's this list going to be called?</h3>
+
       {Auth.loggedIn() ? (
         <>
           <p
@@ -69,9 +80,9 @@ const NoteForm = ({ itemId }) => {
           >
             <div className="col-12 col-lg-9">
               <textarea
-                name="noteText"
-                placeholder="Add a note about this item!"
-                value={noteText}
+                name="listName"
+                placeholder="What's your list called?"
+                value={listName}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
@@ -79,9 +90,9 @@ const NoteForm = ({ itemId }) => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <Button type="submit">
-                Add Note
-              </Button>
+              <button className="btn btn-primary btn-block py-3" type="submit">
+                Add List
+              </button>
             </div>
             {error && (
               <div className="col-12 my-3 bg-danger text-white p-3">
@@ -92,7 +103,7 @@ const NoteForm = ({ itemId }) => {
         </>
       ) : (
         <p>
-          You need to be logged in to add a note to one of your items. Please{' '}
+          You need to be logged in to make a list. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}
@@ -100,4 +111,4 @@ const NoteForm = ({ itemId }) => {
   );
 };
 
-export default NoteForm;
+export default ListForm;
